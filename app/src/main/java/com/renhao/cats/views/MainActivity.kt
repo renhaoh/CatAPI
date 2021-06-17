@@ -9,16 +9,10 @@ import com.renhao.cats.viewmodels.MainViewModel
 import com.renhao.cats.viewmodels.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        viewModel = ViewModelProvider(this, MainViewModelFactory()).get(MainViewModel::class.java)
-
-
-        viewModel.fetchCatsData()
 
     }
 }

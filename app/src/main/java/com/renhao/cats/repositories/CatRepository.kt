@@ -1,7 +1,9 @@
 package com.renhao.cats.repositories
 
 import com.renhao.cats.BuildConfig
+import com.renhao.cats.models.Cat
 import com.renhao.cats.network.CatsService
+import com.renhao.cats.network.NetworkResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -43,10 +45,9 @@ class CatRepository(private val ioDispatcher: CoroutineDispatcher = Dispatchers.
         catsRetrofit.create(CatsService::class.java)
     }
 
-    suspend fun fetchRandomCat() {
-        val x = withContext(ioDispatcher) {
-            catsServices.getRandomCat()
+    suspend fun fetchRandomCat(): NetworkResponse<List<Cat>> {
+       return withContext(ioDispatcher) {
+            NetworkResponse.create(catsServices.getRandomCat())
         }
-        val j = 10
     }
 }
