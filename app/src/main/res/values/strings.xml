@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Cats</string>
+
     <string name="random_cat_image_desc">random cat image</string>
     <string name="random_cat_button_text">Load a random cat image</string>
     <string name="random_cat_load_error_available">No cats available</string>
     <string name="random_cat_load_error_network">Network Error - Please make sure you\'re connected to the internet</string>
+
 </resources>

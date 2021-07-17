@@ -50,4 +50,10 @@ class CatRepository(private val ioDispatcher: CoroutineDispatcher = Dispatchers.
             NetworkResponse.create(catsServices.getRandomCat())
         }
     }
+
+    suspend fun fetchRandomCatList(limit: Int = 5, page: Int = 0): NetworkResponse<List<Cat>> {
+        return withContext(ioDispatcher) {
+            NetworkResponse.create(catsServices.getRandomCatList(limit, page))
+        }
+    }
 }

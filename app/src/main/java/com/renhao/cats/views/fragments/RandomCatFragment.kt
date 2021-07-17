@@ -66,7 +66,6 @@ class RandomCatFragment : Fragment() {
                 }
                 is DataResult.Success -> {
                     randomCatProgressbar.visibility = View.GONE
-                    Log.d("CATS", "${it.data.height} x ${it.data.width}")
                     Glide.with(this).load(it.data.imageUrl).into(randomCatImageView)
                 }
             }

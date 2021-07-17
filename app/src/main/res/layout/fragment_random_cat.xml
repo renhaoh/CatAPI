@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/random_cat_image_view"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:padding="10dp"
         android:contentDescription="@string/random_cat_image_desc"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,6 +22,7 @@
         android:id="@+id/random_cat_progress_bar"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/load_random_cat_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
