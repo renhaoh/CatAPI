@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,7 @@ import com.renhao.cats.views.utils.RandomCatAdapter
 class CatListFragment : Fragment() {
 
     private lateinit var catListRecyclerView: RecyclerView
+    private lateinit var randomCatProgressbar: ProgressBar
 
     private val viewModel by activityViewModels<MainViewModel> {
         MainViewModelFactory()
@@ -30,6 +32,7 @@ class CatListFragment : Fragment() {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_cat_list, container, false)
         catListRecyclerView = view.findViewById(R.id.random_cat_list_recycler_view)
+        randomCatProgressbar = view.findViewById(R.id.random_cat_progress_bar)
         return view
     }
 
@@ -42,9 +45,11 @@ class CatListFragment : Fragment() {
             when (it) {
                 is DataResult.Success -> {
                     catListRecyclerView.visibility = View.VISIBLE
+                    randomCatProgressbar.visibility = View.GONE
                     catListRecyclerView.adapter = RandomCatAdapter(this, it.data)
                 }
                 else -> {
+                    randomCatProgressbar.visibility = View.VISIBLE
                     catListRecyclerView.visibility = View.GONE
                 }
             }
