@@ -4,12 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.fragments.CatListFragment">
+    tools:context=".views.fragments.CatsListFragment">
 
     <ProgressBar
-        android:id="@+id/random_cat_progress_bar"
+        android:id="@+id/progress_bar"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/random_cat_list_recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/error_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/random_cat_list_recycler_view"
         app:layout_constraintEnd_toEndOf="parent"

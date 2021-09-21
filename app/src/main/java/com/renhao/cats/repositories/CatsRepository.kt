@@ -15,7 +15,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Inject
 
-class CatRepository @Inject constructor(
+class CatsRepository @Inject constructor(
     @CatsRESTService private val catsService: CatsService,
     @IODispatcher private val dispatcher: CoroutineDispatcher
 ) {

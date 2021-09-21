@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.renhao.cats.R
-import com.renhao.cats.views.fragments.CatListFragment
+import com.renhao.cats.views.fragments.CatsListFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.commit {
                 // Ensures immediate fragments do not go through lifecycle changes or have animations/transitions executed
                 setReorderingAllowed(true)
-                replace<CatListFragment>(R.id.cat_list_fragment_container)
+                replace<CatsListFragment>(R.id.cat_list_fragment_container)
             }
         }
     }
