@@ -6,24 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.renhao.cats.R
 import com.renhao.cats.network.DataResult
 import com.renhao.cats.viewmodels.MainViewModel
-import com.renhao.cats.viewmodels.MainViewModelFactory
 import com.renhao.cats.views.utils.RandomCatAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CatListFragment : Fragment() {
 
     private lateinit var catListRecyclerView: RecyclerView
     private lateinit var randomCatProgressbar: ProgressBar
 
-    private val viewModel by activityViewModels<MainViewModel> {
-        MainViewModelFactory()
-    }
+    // use activityViewModels for activity-scoped ViewModel
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -9,9 +9,12 @@ import com.renhao.cats.models.Cat
 import com.renhao.cats.network.DataResult
 import com.renhao.cats.network.NetworkResponse
 import com.renhao.cats.repositories.CatRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(private val repository: CatRepository) : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(private val repository: CatRepository) : ViewModel() {
 
     private val mutableRandomCatData : MutableLiveData<DataResult<Cat>> = MutableLiveData()
     val randomCatLiveData: LiveData<DataResult<Cat>> = mutableRandomCatData

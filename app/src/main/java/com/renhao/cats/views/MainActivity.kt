@@ -6,7 +6,9 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.renhao.cats.R
 import com.renhao.cats.views.fragments.CatListFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

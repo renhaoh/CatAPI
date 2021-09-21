@@ -11,12 +11,17 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
 
-class CatRepository(private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
+class CatRepository @Inject constructor() {
     companion object {
         const val CATS_URL = "https://api.thecatapi.com"
     }
 
+    // TODO: inject this later
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+
+    // TODO: Inject this later?
     private val catsHttpClient by lazy {
         val builder = OkHttpClient.Builder()
         builder.addInterceptor(
