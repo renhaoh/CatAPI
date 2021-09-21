@@ -6,8 +6,8 @@ A personal Android Playground using the Cats API.
 
 - Coroutines
 - Retrofit
-
 - Hilt
+- Timber
 
 ### Future Work
 
