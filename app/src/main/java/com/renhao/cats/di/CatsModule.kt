@@ -1,11 +1,16 @@
 package com.renhao.cats.di
 
+import android.content.Context
 import com.renhao.cats.BuildConfig
 import com.renhao.cats.network.CatsService
+import com.renhao.cats.utils.CacheUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -22,21 +27,35 @@ class CatsModule {
 
     @CatsOkHttpClient
     @Provides
-    fun providesCatsOkHttpClient(): OkHttpClient {
-            val builder = OkHttpClient.Builder()
-            builder.addInterceptor(
-                Interceptor { chain ->
-                    val original = chain.request()
+    fun providesCatsOkHttpClient(
+        @ApplicationContext context: Context
+    ): OkHttpClient {
+        val cacheMaxAge = 3
+        val cacheSize = (cacheMaxAge * CacheUtils.ONE_MB).toLong()
+        val cache = Cache(context.cacheDir, cacheSize)
 
-                    val requestBuilder = original.newBuilder()
-                        .header("x-api-key", BuildConfig.CATS_API_KEY)
+        val builder = OkHttpClient.Builder()
+        builder
+            .cache(cache)
+            .addInterceptor(
+            Interceptor { chain ->
+                val original = chain.request()
+                val requestBuilder = original.newBuilder()
 
-                    val request = requestBuilder.build()
-                    chain.proceed(request)
+                if (CacheUtils.hasNetwork(context)) {
+                    requestBuilder.addHeader("Cache-Control", "public, max-age=$cacheMaxAge" )
+                } else {
+                    requestBuilder.addHeader("Cache-Control", "public, only-if-cached")
                 }
-            )
-                .callTimeout(5000L, TimeUnit.MILLISECONDS)
-            return builder.build()
+                
+                requestBuilder.addHeader("x-api-key", BuildConfig.CATS_API_KEY)
+
+                val request = requestBuilder.build()
+                chain.proceed(request)
+            }
+        )
+            .callTimeout(5000L, TimeUnit.MILLISECONDS)
+        return builder.build()
     }
 
     @CatsRESTService
