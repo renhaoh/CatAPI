@@ -12,13 +12,13 @@ A personal Android Playground using the Cats API.
 ### Future Work
 
 - Retrofit Response Caching
+- SwipeRefresh | Pagination with RecyclerView
 - Unit Testing using mock
 - Espresso / Roboelectric
 - Room
 - WorkManager
 - DataBinding
 - Image Scaling + Network Improvements
-- Pagination with RecyclerView
 - Material Theming
 - **Jetpack Compose**
 
