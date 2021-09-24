@@ -11,16 +11,11 @@ import com.bumptech.glide.Glide
 import com.renhao.cats.R
 import com.renhao.cats.models.Cat
 
-class RandomCatAdapter(private val fragment: Fragment, private val catData: List<Cat>): RecyclerView.Adapter<RandomCatAdapter.ViewHolder>() {
+class RandomCatAdapter(private val fragment: Fragment, private var catData: List<Cat>): RecyclerView.Adapter<RandomCatAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val catImage: ImageView
-        val catText: TextView
-
-        init {
-            catImage = view.findViewById(R.id.random_cat_card_image)
-            catText = view.findViewById(R.id.random_cat_card_text)
-        }
+        val catImage: ImageView = view.findViewById(R.id.random_cat_card_image)
+        val catText: TextView = view.findViewById(R.id.random_cat_card_text)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,5 +34,10 @@ class RandomCatAdapter(private val fragment: Fragment, private val catData: List
 
     override fun getItemCount(): Int {
         return catData.size
+    }
+
+    fun updateData(catList: List<Cat>) {
+        catData = catList
+        notifyDataSetChanged()
     }
 }

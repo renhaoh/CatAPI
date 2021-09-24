@@ -24,7 +24,7 @@ class MainViewModel @Inject constructor(private val repository: CatsRepository) 
         fetchRandomCatList()
     }
 
-    private fun fetchRandomCatList() {
+    fun fetchRandomCatList() {
         mutableRandomCatListData.value = DataResult.Loading()
         viewModelScope.launch {
             try {

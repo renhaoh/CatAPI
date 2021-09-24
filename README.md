@@ -8,13 +8,14 @@ A personal Android Playground using the Cats API.
 - Retrofit
 - Hilt
 - Timber
+- Retrofit Response Caching
 
 ### Future Work
 
-- Retrofit Response Caching
 - SwipeRefresh | Pagination with RecyclerView
 - Unit Testing using mock
 - Espresso / Roboelectric
+- **Migration from LiveData to Flow**
 - Room
 - WorkManager
 - DataBinding
