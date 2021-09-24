@@ -38,7 +38,7 @@ class MainViewModel @Inject constructor(private val repository: CatsRepository) 
                         }
                     }
                     is NetworkResponse.Error -> {
-                        Timber.e("Network error with code: ${callResult.errorCode} and message:${callResult.errorMessage}")
+                        Timber.e("Network error with code: ${callResult.errorCode} and message: ${callResult.errorMessage}")
                         mutableRandomCatListData.value = DataResult.Error(R.string.random_cat_load_error_network)
                     }
                 }
