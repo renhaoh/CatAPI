@@ -5,17 +5,17 @@ A personal Android Playground using the Cats API.
 ### Features
 
 - Coroutines
-- Retrofit
+- Retrofit with a simple cache
 - Hilt
 - Timber
-- Retrofit Response Caching
+- SwipeRefresh layout 
 
 ### Future Work
 
-- SwipeRefresh | Pagination with RecyclerView
-- Unit Testing using mock
+- Unit Testing using mockk
 - Espresso / Roboelectric
-- **Migration from LiveData to Flow**
+- Explore CoordinatorLayout capabilities
+- **Migration from LiveData to Flow **| Pagination with Pager 3
 - Room
 - WorkManager
 - DataBinding

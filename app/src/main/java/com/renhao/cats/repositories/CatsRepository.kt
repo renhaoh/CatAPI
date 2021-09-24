@@ -20,12 +20,6 @@ class CatsRepository @Inject constructor(
     @IODispatcher private val dispatcher: CoroutineDispatcher
 ) {
 
-    suspend fun fetchRandomCat(): NetworkResponse<List<Cat>> {
-       return withContext(dispatcher) {
-            NetworkResponse.create(catsService.getRandomCat())
-        }
-    }
-
     suspend fun fetchRandomCatList(limit: Int = 5, page: Int = 0): NetworkResponse<List<Cat>> {
         return withContext(dispatcher) {
             NetworkResponse.create(catsService.getRandomCatList(limit, page))
