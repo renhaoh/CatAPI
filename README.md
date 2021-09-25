@@ -21,5 +21,6 @@ A personal Android Playground using the Cats API.
 - DataBinding
 - Image Scaling + Network Improvements
 - Material Theming
+- Navigation Component
 - **Jetpack Compose**
 
