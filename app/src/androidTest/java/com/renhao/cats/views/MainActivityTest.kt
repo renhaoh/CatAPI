@@ -1,8 +1,8 @@
 package com.renhao.cats.views
 
-import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.swipeDown
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -22,6 +22,7 @@ import org.junit.runner.RunWith
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 // TODO: Consider using Idling Resource instead of BaristaSleep?
+// TODO: Figure out Flakiness - why do they work through debug but not run?
 class MainActivityTest {
 
     @Before
@@ -45,7 +46,6 @@ class MainActivityTest {
     fun validateRecyclerView_loaded() {
         onView(withId(R.id.cat_list_fragment_container)).check(matches(isDisplayed()))
 
-        // TODO: is there a race condition here?
         TestingUtils.waitForId(R.id.random_cat_list_recycler_view, 5000)
         BaristaVisibilityAssertions.assertNotDisplayed(R.id.error_message)
         BaristaVisibilityAssertions.assertDisplayed(R.id.random_cat_list_recycler_view)
@@ -61,10 +61,7 @@ class MainActivityTest {
 
     @Test
     fun validateRecyclerView_networkError() {
-        InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("svc wifi disable")
-        InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("svc data disable")
-        // Make sure the internet connectivity is lost
-        BaristaSleepInteractions.sleep(2000)
+        disableInternet()
 
         onView(withId(R.id.cat_list_fragment_container)).check(matches(isDisplayed()))
 
@@ -76,19 +73,67 @@ class MainActivityTest {
 
     @Test
     fun validateSwipeToRefresh_loaded() {
+        disableInternet()
+
         onView(withId(R.id.cat_list_fragment_container)).check(matches(isDisplayed()))
+
+        TestingUtils.waitForId(R.id.error_message, 5000)
+        BaristaVisibilityAssertions.assertNotDisplayed(R.id.random_cat_list_recycler_view)
+        BaristaVisibilityAssertions.assertDisplayed(R.id.error_message)
+
+        enableInternet()
+
+        performSwipeRefreshAction()
+
+        TestingUtils.waitForId(R.id.random_cat_list_recycler_view, 5000)
+        BaristaVisibilityAssertions.assertNotDisplayed(R.id.error_message)
+        BaristaVisibilityAssertions.assertDisplayed(R.id.random_cat_list_recycler_view)
+
+        val recyclerView = onView(withId(R.id.random_cat_list_recycler_view))
+
+        recyclerView.check(TestingUtils.RecyclerViewSizeAssertion(5))
+
     }
 
     @Test
     fun validateSwipeToRefresh_networkError() {
         onView(withId(R.id.cat_list_fragment_container)).check(matches(isDisplayed()))
+
+        TestingUtils.waitForId(R.id.random_cat_list_recycler_view, 5000)
+        BaristaVisibilityAssertions.assertNotDisplayed(R.id.error_message)
+        BaristaVisibilityAssertions.assertDisplayed(R.id.random_cat_list_recycler_view)
+
+        disableInternet()
+
+        performSwipeRefreshAction()
+
+        BaristaVisibilityAssertions.assertDisplayed(R.id.error_message)
+        BaristaVisibilityAssertions.assertNotDisplayed(R.id.random_cat_list_recycler_view)
+
     }
 
     @After
     fun after() {
+        enableInternet()
+    }
+
+    private fun performSwipeRefreshAction() {
+        onView(withId(R.id.random_cat_list_swipe_refresh))
+            .perform(TestingUtils.withCustomConstraints(swipeDown(), isDisplayingAtLeast(85)))
+        BaristaSleepInteractions.sleep(5000)
+    }
+
+    private fun enableInternet() {
         InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("svc wifi enable")
         InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("svc data enable")
-        // Make sure WIFI / Internet is turned on
+        // Leave enough time for wifi / data to connect
+        BaristaSleepInteractions.sleep(10000)
+    }
+
+    private fun disableInternet() {
+        InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("svc wifi disable")
+        InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("svc data disable")
+        // Make sure the internet connectivity is lost
         BaristaSleepInteractions.sleep(5000)
     }
 

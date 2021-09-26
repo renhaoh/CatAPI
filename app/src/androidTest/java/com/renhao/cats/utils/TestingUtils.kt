@@ -5,7 +5,6 @@ import androidx.annotation.IdRes
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.*
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.espresso.util.TreeIterables
 import com.adevinta.android.barista.interaction.BaristaSleepInteractions
@@ -14,10 +13,6 @@ import org.hamcrest.Matcher
 import androidx.test.espresso.matcher.BoundedMatcher
 import org.hamcrest.Description
 import androidx.test.espresso.ViewAction
-
-
-
-
 
 object TestingUtils {
 
@@ -72,8 +67,8 @@ object TestingUtils {
     }
 
     // from: https://stackoverflow.com/questions/39688297/how-to-check-if-a-view-is-visible-on-a-specific-recyclerview-item
-    fun withViewAtPosition(position: Int, itemMatcher: Matcher<View?>): Matcher<View?>? {
-        return object : BoundedMatcher<View?, RecyclerView>(RecyclerView::class.java) {
+    fun withViewAtPosition(position: Int, itemMatcher: Matcher<View>): Matcher<View?> {
+        return object : BoundedMatcher<View, RecyclerView>(RecyclerView::class.java) {
             override fun describeTo(description: Description?) {
                 itemMatcher.describeTo(description)
             }
