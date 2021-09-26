@@ -12,6 +12,8 @@ import com.renhao.cats.repositories.CatsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.io.IOException
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,12 +41,19 @@ class MainViewModel @Inject constructor(private val repository: CatsRepository) 
                     }
                     is NetworkResponse.Error -> {
                         Timber.e("Network error with code: ${callResult.errorCode} and message: ${callResult.errorMessage}")
-                        mutableRandomCatListData.value = DataResult.Error(R.string.random_cat_load_error_network)
+                        mutableRandomCatListData.value = DataResult.Error(R.string.random_cat_load_error_available)
                     }
                 }
             } catch (exception: Exception) {
+                val msgId = when (exception) {
+                    is IOException,
+                    is UnknownHostException -> {
+                        R.string.random_cat_load_error_network
+                    }
+                    else -> R.string.random_cat_error_catch_all
+                }
                 Timber.e(exception)
-                mutableRandomCatListData.value = DataResult.Error(R.string.random_cat_load_error_available)
+                mutableRandomCatListData.value = DataResult.Error(msgId)
             }
         }
     }

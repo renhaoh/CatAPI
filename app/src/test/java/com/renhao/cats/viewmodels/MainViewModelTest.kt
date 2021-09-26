@@ -71,7 +71,7 @@ class MainViewModelTest {
 
         val result = viewModel.randomCatListLiveData.value
         Assert.assertTrue(result is DataResult.Error)
-        Assert.assertEquals(R.string.random_cat_load_error_network, (result as? DataResult.Error)?.messageId)
+        Assert.assertEquals(R.string.random_cat_load_error_available, (result as? DataResult.Error)?.messageId)
     }
 
     @Test
@@ -106,7 +106,7 @@ class MainViewModelTest {
 
         val result = viewModel.randomCatListLiveData.value
         Assert.assertTrue(result is DataResult.Error)
-        Assert.assertEquals(R.string.random_cat_load_error_available, (result as? DataResult.Error)?.messageId)
+        Assert.assertEquals(R.string.random_cat_load_error_network, (result as? DataResult.Error)?.messageId)
     }
 
 }
