@@ -9,11 +9,11 @@ A personal Android Playground using the Cats API.
 - Hilt
 - Timber
 - SwipeRefresh layout 
+- Unit Testing using mockk
+- Instrumented Tests with Espresso
 
 ### Future Work
 
-- Unit Testing using mockk
-- Espresso / Roboelectric
 - Explore CoordinatorLayout capabilities
 - **Migration from LiveData to Flow **| Pagination with Pager 3
 - Room
