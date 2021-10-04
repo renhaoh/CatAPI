@@ -4,23 +4,26 @@ A personal Android Playground using the Cats API.
 
 ### Features
 
-- Coroutines
-- Retrofit with a simple cache
-- Hilt
-- Timber
-- SwipeRefresh layout 
+- Coroutines for Async Operations
+- Retrofit for Networking
+- Hilt for Dependency Injection
+- Timber for Logging
+- Glide for Image Loading and Caching
+- mockk for Unit Testing
+- Espresso / Roboelectric for Instrumented Tests
 
 ### Future Work
 
-- Unit Testing using mockk
-- Espresso / Roboelectric
+- RecyclerView onClick() / Single Activity application?
 - Explore CoordinatorLayout capabilities
-- **Migration from LiveData to Flow **| Pagination with Pager 3
+- Pagination with Pager 3
 - Room
+- Photo Gallery
 - WorkManager
+- Asking for Permissions Dynamically
+- Requesting Location Access
 - DataBinding
-- Image Scaling + Network Improvements
+- **Migration from LiveData to Flow **
 - Material Theming
 - Navigation Component
 - **Jetpack Compose**
-
