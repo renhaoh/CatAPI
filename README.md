@@ -15,9 +15,9 @@ A personal Android Playground using the Cats API.
 ### Future Work
 
 - RecyclerView onClick() / Single Activity application?
-- Explore CoordinatorLayout capabilities
 - Pagination with Pager 3
 - Room
+- Explore CoordinatorLayout capabilities
 - Photo Gallery
 - WorkManager
 - Asking for Permissions Dynamically
