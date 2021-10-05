@@ -11,11 +11,22 @@ import com.bumptech.glide.Glide
 import com.renhao.cats.R
 import com.renhao.cats.models.Cat
 
-class RandomCatAdapter(private val fragment: Fragment, private var catData: List<Cat>): RecyclerView.Adapter<RandomCatAdapter.ViewHolder>() {
+class CatListAdapter(private val fragment: Fragment,
+                     private var catData: List<Cat>,
+                     private val onItemClick: (Cat) -> Unit): RecyclerView.Adapter<CatListAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val catImage: ImageView = view.findViewById(R.id.random_cat_card_image)
-        val catText: TextView = view.findViewById(R.id.random_cat_card_text)
+        private val catImage: ImageView = view.findViewById(R.id.random_cat_card_image)
+        private val catText: TextView = view.findViewById(R.id.random_cat_card_text)
+
+        fun bind(data: Cat, onItemClick: (Cat) -> Unit) {
+            Glide.with(itemView).load(data.imageUrl).into(catImage)
+            catText.text = String.format("%d x %d", data.height, data.width)
+
+            itemView.setOnClickListener {
+                onItemClick(data)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,8 +38,7 @@ class RandomCatAdapter(private val fragment: Fragment, private var catData: List
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val cat = catData.getOrNull(position)
         cat?.let {
-            Glide.with(holder.itemView).load(it.imageUrl).into(holder.catImage)
-            holder.catText.text = String.format("%d x %d", it.height, it.width)
+            holder.bind(it, onItemClick)
         }
     }
 

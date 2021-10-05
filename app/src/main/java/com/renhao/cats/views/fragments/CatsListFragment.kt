@@ -12,9 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.renhao.cats.R
+import com.renhao.cats.models.Cat
 import com.renhao.cats.network.DataResult
 import com.renhao.cats.viewmodels.MainViewModel
-import com.renhao.cats.views.utils.RandomCatAdapter
+import com.renhao.cats.views.utils.CatListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,7 +43,9 @@ class CatsListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = RandomCatAdapter(this, listOf())
+        val adapter = CatListAdapter(this, listOf()) {
+            onCatsListItemCLick(it)
+        }
         catListRecyclerView.layoutManager = LinearLayoutManager(context)
         catListRecyclerView.adapter = adapter
 
@@ -72,6 +75,10 @@ class CatsListFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun onCatsListItemCLick(position: Cat) {
+        // action here
     }
 
 }
