@@ -13,32 +13,34 @@ import com.renhao.cats.models.Cat
 
 class CatListAdapter(private val fragment: Fragment,
                      private var catData: List<Cat>,
-                     private val onItemClick: (Cat) -> Unit): RecyclerView.Adapter<CatListAdapter.ViewHolder>() {
+                     private val onItemClick: (Int) -> Unit): RecyclerView.Adapter<CatListAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, onItemClick: (Int) -> Unit): RecyclerView.ViewHolder(view) {
         private val catImage: ImageView = view.findViewById(R.id.random_cat_card_image)
         private val catText: TextView = view.findViewById(R.id.random_cat_card_text)
 
-        fun bind(data: Cat, onItemClick: (Cat) -> Unit) {
+        init {
+            itemView.setOnClickListener {
+                onItemClick(adapterPosition)
+            }
+        }
+
+        fun bind(data: Cat) {
             Glide.with(itemView).load(data.imageUrl).into(catImage)
             catText.text = String.format("%d x %d", data.height, data.width)
-
-            itemView.setOnClickListener {
-                onItemClick(data)
-            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.random_cat_list_row, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(view, onItemClick)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val cat = catData.getOrNull(position)
         cat?.let {
-            holder.bind(it, onItemClick)
+            holder.bind(it)
         }
     }
 
